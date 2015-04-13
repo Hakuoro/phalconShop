@@ -8,16 +8,6 @@ use Phalcon\Config\Adapter\Ini as ConfigIni;
 
 
 try {
-    $config = new ConfigIni(APP_PATH . 'common/config/config.ini');
-
-    $registerDirs = $config->registerDirs->toArray();
-
-    array_walk($registerDirs, function (&$item){
-        $item = APP_PATH.$item;
-    });
-
-    (new \Phalcon\Loader())->registerDirs($registerDirs)->register();
-
     require APP_PATH . 'common/config/services.php';
 
     $application = new \Phalcon\Mvc\Application($di);

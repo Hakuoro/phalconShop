@@ -9,9 +9,20 @@ use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
 
+
+$config = new ConfigIni(APP_PATH . 'common/config/config.ini');
+
+$registerDirs = $config->registerDirs->toArray();
+
+array_walk($registerDirs, function (&$item){
+    $item = APP_PATH.$item;
+});
+
+(new \Phalcon\Loader())->registerDirs($registerDirs)->register();
+
 $di = new FactoryDefault();
 
-//$routes = new ConfigIni(APP_PATH . 'common/config/routes.ini');
+$di->set('config', $config);
 
 $router = new \Phalcon\Mvc\Router();
 $router->removeExtraSlashes(true);
@@ -40,11 +51,6 @@ $adminRout->add('', [
 ]);
 // Добавление группы в общие правила маршрутизации
 $router->mount($adminRout);
-
-
-//foreach ($routes as $rout => $paths){
-//    $router->add($rout, $paths->toArray());
-//}
 
 $di->set('router', $router);
 

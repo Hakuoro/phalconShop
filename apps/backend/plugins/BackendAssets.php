@@ -19,6 +19,8 @@ class BackendAssets extends \Phalcon\Mvc\User\Component
         /** @var \Phalcon\Mvc\Controller $controller */
         $controller =  $dispatcher->getActiveController();
 
+        $controller->view->currentPage =  $controller->request->getURI();
+
         $controller->assets
 
             ->addCss('//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css', false)
