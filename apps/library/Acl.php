@@ -15,8 +15,8 @@ class Acl extends \Phalcon\Mvc\User\Component
 
 	public function beforeExecuteRoute(Event $event, Dispatcher $dispatcher)
 	{
-		echo $resource = $this->_module . '-' . $dispatcher->getControllerName(), PHP_EOL; // frontend-dashboard
-		echo $access = $dispatcher->getActionName(); // null
+
+
 	}
 
 }

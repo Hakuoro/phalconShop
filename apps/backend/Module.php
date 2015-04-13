@@ -2,6 +2,8 @@
 
 namespace Multiple\Backend;
 
+use Multiple\Backend\Plugins\AclListener;
+use Multiple\Backend\Plugins\BackendAssets;
 use Phalcon\DI\FactoryDefault;
 
 class Module
@@ -34,7 +36,9 @@ class Module
 
 			//Attach a event listener to the dispatcher
 			$eventManager = new \Phalcon\Events\Manager();
-			$eventManager->attach('dispatch', new \Acl('backend'));
+			//$eventManager->attach('dispatch', new AclListener('backend'));
+			$eventManager->attach('dispatch', new BackendAssets('backend'));
+
 
 			$dispatcher->setEventsManager($eventManager);
 			$dispatcher->setDefaultNamespace('Multiple\Backend\Controllers\\');
@@ -45,6 +49,11 @@ class Module
 		$di->set('view', function() {
 			$view = new \Phalcon\Mvc\View();
 			$view->setViewsDir(APP_PATH.'apps/backend/views/');
+
+            $view->registerEngines(array(
+                ".volt" => 'voltService'
+            ));
+
 			return $view;
 		});
 	}

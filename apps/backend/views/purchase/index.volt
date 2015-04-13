@@ -1,5 +1,5 @@
 {% extends "base.volt" %}
-{% block title %}Товары{% endblock %}
+{% block title %}Покупки{% endblock %}
 
 {% block content %}
 

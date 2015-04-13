@@ -33,6 +33,11 @@ $adminRout->add('/:controller', [
     'controller' => 1,
     'action' => 'index'
 ]);
+
+$adminRout->add('', [
+    'controller' => 'index',
+    'action' => 'index'
+]);
 // Добавление группы в общие правила маршрутизации
 $router->mount($adminRout);
 

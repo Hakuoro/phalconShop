@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Example</title>
+    <title>Example1</title>
 </head>
 <body>
 

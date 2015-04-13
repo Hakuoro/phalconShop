@@ -17,8 +17,10 @@ class AclListener
 
 	public function beforeDispatch(Event $event, Dispatcher $dispatcher)
 	{
-		echo $resource = $this->_module . '-' . $dispatcher->getControllerName(), PHP_EOL; // frontend-dashboard
-		echo $access = $dispatcher->getActionName(); // null
+        //xprint_r($event); exit;
+        //echo 115511; exit;
+		//echo $resource = $this->_module . '-' . $dispatcher->getControllerName(), PHP_EOL; // frontend-dashboard
+		//echo $access = $dispatcher->getActionName(); // null
 	}
 
 }

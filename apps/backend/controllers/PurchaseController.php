@@ -3,7 +3,7 @@
 namespace Multiple\Backend\Controllers;
 
 
-class ProductController extends \Phalcon\Mvc\Controller
+class PurchaseController extends \Phalcon\Mvc\Controller
 {
 
 	public function indexAction()
