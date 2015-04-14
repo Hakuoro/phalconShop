@@ -74,6 +74,23 @@ class Product extends \Phalcon\Mvc\Model
         );
     }
 
+    public function initialize()
+    {
+        $this->hasManyToMany(
+            "id",
+            "TagLink",
+            "id_item", "id_tag",
+            "Tag",
+            "id"
+        );
+    }
+
+    /*public function initialize()
+    {
+        $this->hasMany("id", "TagLink", "id_item");
+    }*/
+
+
 
 
 

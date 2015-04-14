@@ -18,6 +18,7 @@ class Module
 			'Multiple\Backend\Controllers' => APP_PATH.'apps/backend/controllers/',
 			'Multiple\Backend\Models' => APP_PATH.'apps/backend/models/',
 			'Multiple\Backend\Plugins' => APP_PATH.'apps/backend/plugins/',
+			'Multiple\Backend\Forms' => APP_PATH.'apps/backend/forms/',
 		));
 
 		$loader->register();

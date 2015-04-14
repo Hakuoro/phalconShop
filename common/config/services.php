@@ -45,6 +45,12 @@ $adminRout->add('/:controller', [
     'action' => 'index'
 ]);
 
+$adminRout->add('/:controller/:int', [
+    'controller' => 1,
+    'action' => 'show',
+    'id' => 2
+]);
+
 $adminRout->add('', [
     'controller' => 'index',
     'action' => 'index'
