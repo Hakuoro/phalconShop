@@ -3,6 +3,8 @@
 namespace Multiple\Backend\Forms;
 
 
+use Phalcon\Forms\Element\Hidden;
+use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\TextArea;
 use Phalcon\Validation\Validator\PresenceOf;
@@ -13,10 +15,9 @@ class ProductForm extends \Phalcon\Forms\Form
 {
     public function initialize($entity = null, $options = null)
     {
-        if (isset($options['edit'])) {
-            $id = new \Phalcon\Forms\Element\Hidden('id');
-            $this->add($id);
-        }
+
+        $id = new Hidden('id');
+        $this->add($id);
 
         $name = new Text('title', array(
             'placeholder' => 'Название'
@@ -35,7 +36,7 @@ class ProductForm extends \Phalcon\Forms\Form
         $email->addValidators(array(
             new PresenceOf(array(
                 'message' => 'Описание обязательно'
-            )),
+            ))
         ));
         $this->add($email);
 
@@ -48,13 +49,31 @@ class ProductForm extends \Phalcon\Forms\Form
                 'message' => 'Цена обязательна'
             )),
             new Regex ([
-                'pattern' => '/^\D$/',
-                'message' => 'The creation date is invalid'
+                'pattern' => '/^(\d).*$/',
+                'message' => 'Цена неверная'
             ])
         ]);
         $this->add($price);
 
+        $url = new Text('url', array(
+            'placeholder' => 'SEO Url'
+        ));
+        $url->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Введите урл'
+            ))
+        ));
+        $this->add($url);
 
+
+        $this->add(
+            new Select('status',
+                [
+                    '1' => 'Активен',
+                    '2' => 'Отключен'
+                ]
+            )
+        );
 
     }
 }
