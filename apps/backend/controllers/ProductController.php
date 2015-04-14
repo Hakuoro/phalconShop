@@ -21,39 +21,23 @@ class ProductController extends \Phalcon\Mvc\Controller
     public function showAction($id)
     {
 
+        $entity = \Product::findFirst($id);
 
-        $form = new ProductForm();
+        $form = new ProductForm($entity);
 
+        $form->bind($_POST, $entity);
 
         if ($this->request->isPost()){
 
-
-
-            print_r($form->getMessages());
-
-
             if ($form->isValid($this->request->getPost())){
-
-
-                $product = $form->getEntity();
-
-                print_r($product);
-
-
-
+                $entity->save();
             }else{
-
-                $this->flash->message();
+                print_r($form->getMessages());
+                exit;
             }
-
-
-
         }
 
-        $this->view->product = \Product::findFirst($id);
-
-        if ($this->view->product)
-            $form->setEntity($this->view->product);
+        $this->view->product = $entity;
 
         $this->view->form = $form;
 

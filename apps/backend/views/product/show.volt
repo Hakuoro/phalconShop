@@ -35,6 +35,13 @@
         </div>
 
         <div class="form-group">
+            <label for="inputStatus" class="col-sm-1 control-label">Статус</label>
+            <div class="col-sm-8">
+                {{ form.render('status', ['class':"form-control", 'id':'inputStatus']) }}
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-sm-offset-1 col-sm-8">
                 <button type="submit" class="btn btn-default">Сохранить</button>
             </div>
