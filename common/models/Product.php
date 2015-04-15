@@ -1,4 +1,6 @@
 <?php
+namespace Common\Models;
+
 class Product extends \Phalcon\Mvc\Model
 {
 

@@ -17,8 +17,12 @@ $registerDirs = $config->registerDirs->toArray();
 array_walk($registerDirs, function (&$item){
     $item = APP_PATH.$item;
 });
+$loader = new \Phalcon\Loader();
+$loader->registerDirs($registerDirs)->register();
 
-(new \Phalcon\Loader())->registerDirs($registerDirs)->register();
+$loader->registerNamespaces(array(
+    'Common\Models' => APP_PATH.'common/models/',
+));
 
 $di = new FactoryDefault();
 
@@ -47,7 +51,7 @@ $adminRout->add('/:controller', [
 
 $adminRout->add('/:controller/:int', [
     'controller' => 1,
-    'action' => 'show',
+    'action' => 'edit',
     'id' => 2
 ]);
 
