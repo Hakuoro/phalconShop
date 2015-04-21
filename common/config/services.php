@@ -46,7 +46,7 @@ $adminRout->add('/:controller/:action', [
 
 $adminRout->add('/:controller', [
     'controller' => 1,
-    'action' => 'index'
+    'action' => 'list'
 ]);
 
 $adminRout->add('/:controller/:int', [

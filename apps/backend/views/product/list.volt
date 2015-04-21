@@ -12,7 +12,7 @@
         </thead>
         <tbody>
 
-        {% for product in products %}
+        {% for product in entities %}
             <tr>
                 <th scope="row"><a href="/haku/product/{{ product.id }}">{{ product.title|e }}</a></th>
                 <td>{% for tagItem in product.tag %}<a href="/haku/tag/{{ tagItem.id }}">{{ tagItem.name |e }}</a> {% if !loop.last %}, {% endif %} {% endfor %}</td>

@@ -2,6 +2,8 @@
 
 namespace Multiple\Backend\Controllers;
 
+use Phalcon\Mvc\View;
+
 class CrudController extends \Phalcon\Mvc\Controller
 {
     protected $modelClass = '';
@@ -11,8 +13,22 @@ class CrudController extends \Phalcon\Mvc\Controller
 
     public function listAction()
     {
-        $model = $this->modelClass;
-        $this->view->products =  $model::find();
+        $model = ($this->modelClass);
+        $entities =  $model::find();
+
+        if ($this->request->isAjax()){
+            $this->view->disable();
+
+            $this->response->setJsonContent(
+                [
+                    'status' => 200,
+                    'entities' => $entities
+                ]
+            );
+        }else{
+            $this->view->entities = $entities;
+        }
+
     }
 
     public function editAction($id)
@@ -39,7 +55,7 @@ class CrudController extends \Phalcon\Mvc\Controller
 
         $this->view->pick($this->editTemplate);
 
-        $this->view->product = $entity;
+        $this->view->entity = $entity;
         $this->view->form = $form;
 
     }
