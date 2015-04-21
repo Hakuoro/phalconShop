@@ -13,10 +13,10 @@
     {% block top_menu %}{% include "partials/top_menu.volt" %}{% endblock %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
+            <div class=" col-md-2 sidebar">
                 {% block left_menu %}{% include "partials/left_menu.volt" %}{% endblock %}
             </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="col-md-10 col-md-offset-2 main">
                 {% block content %}{% endblock %}
             </div>
         </div>

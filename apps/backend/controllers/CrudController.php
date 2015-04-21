@@ -25,6 +25,8 @@ class CrudController extends \Phalcon\Mvc\Controller
                     'entities' => $entities
                 ]
             );
+
+            return $this->response;
         }else{
             $this->view->entities = $entities;
         }
