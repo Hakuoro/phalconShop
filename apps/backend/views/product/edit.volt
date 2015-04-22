@@ -2,20 +2,22 @@
 {% block title %}{{ entity.title |e }}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="form-group">
-            <label for="inputTitle" class=" col-md-2 control-label">Теги</label>
-            <div class="col-md-4">
-                {% for tagItem in entity.tag %}<a href="/haku/tag/{{ tagItem.id }}">{{ tagItem.name |e }}</a> {% if !loop.last %}<br/>{% endif %} {% endfor %}
-                    <a>Добавить</a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-
         <form class="form-horizontal" method="post" >
 
             {{ form.render('id') }}
+
+            <div class="form-group">
+                <label for="inputTitle" class=" col-md-2" style="text-align: right;">Теги</label>
+                <div class="col-md-4">
+                    <select id="select6" name="tags[]" multiple style="width: 100%; height: 40px;">
+                        {% for tag in tags %}
+                            <option  value="{{ tag['id'] }}" {% if tag['selected'] %}selected="selected"{% endif %} >{{ tag['name'] |e }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
 
             <div class="form-group">
                 <label for="inputTitle" class=" col-md-2 control-label">Наименование</label>
@@ -56,5 +58,4 @@
                 </div>
             </div>
         </form>
-    </div>
 {% endblock %}

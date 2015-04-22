@@ -11,6 +11,8 @@ class CrudController extends \Phalcon\Mvc\Controller
     protected $baseUrl = '';
     protected $editTemplate = '';
 
+    protected $entity;
+
     public function listAction()
     {
         $model = ($this->modelClass);
@@ -37,17 +39,18 @@ class CrudController extends \Phalcon\Mvc\Controller
     {
         $model = $this->modelClass;
 
-        $entity = $model::findFirst($id);
+        $this->entity = $model::findFirst($id);
 
-        $form = new $this->formClass($entity);
+        $form = new $this->formClass($this->entity);
 
-        $form->bind($_POST, $entity);
+        $form->bind($_POST, $this->entity);
 
         if ($this->request->isPost()){
 
             if ($form->isValid($this->request->getPost())){
-                if ($entity->save()){
-                    $this->response->redirect($this->baseUrl . $entity->id);
+                if ($this->entity->save()){
+                    $this->saveTags();
+                    $this->response->redirect($this->baseUrl . $this->entity->id);
                 }
             }else{
                 print_r($form->getMessages());
@@ -57,8 +60,14 @@ class CrudController extends \Phalcon\Mvc\Controller
 
         $this->view->pick($this->editTemplate);
 
-        $this->view->entity = $entity;
+        $this->view->entity = $this->entity;
         $this->view->form = $form;
 
     }
+
+    protected function saveTags()
+    {
+
+    }
+
 }

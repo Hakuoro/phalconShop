@@ -35,8 +35,8 @@ class TagLink extends \Phalcon\Mvc\Model
 
     public function initialize()
     {
-        $this->belongsTo("id_tag", "Tag", "id");
-        $this->belongsTo("id_item", "Product", "id");
+        $this->belongsTo("id_tag", "Tag", "id", ['foreignKey' => ['action' => \Phalcon\Mvc\Model\Relation::NO_ACTION]]);
+        $this->belongsTo("id_item", "Product", "id", ['foreignKey' => ['action' => \Phalcon\Mvc\Model\Relation::NO_ACTION]]);
     }
 
 }

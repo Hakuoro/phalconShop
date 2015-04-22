@@ -25,12 +25,15 @@ class BackendAssets extends \Phalcon\Mvc\User\Component
 
             ->addCss('//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css', false)
             ->addCss('css/dashboard.css')
+            ->addCss('css/fm.selectator.jquery.css')
         ;
 
         $controller->assets
+            ->addJs('//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js', false)
             ->addJs('js/bootstrap.min.js')
             ->addJs('js/holder.js')
-            ->addJs('//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js', false)
+            ->addJs('js/fm.selectator.jquery.js')
+            ->addJs('js/product.select.js')
         ;
 
 	}
