@@ -85,6 +85,8 @@ class Product extends \Phalcon\Mvc\Model
             "Tag",
             "id"
         );
+
+        $this->hasMany("id", "Image", "id_product");
     }
 
     /*public function initialize()

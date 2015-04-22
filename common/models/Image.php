@@ -1,6 +1,6 @@
 <?php
 
-class Photo extends \Phalcon\Mvc\Model
+class Image extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -8,6 +8,12 @@ class Photo extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $id;
+
+    /**
+     *
+     * @var integer
+     */
+    public $id_product;
 
     /**
      *
@@ -58,7 +64,8 @@ class Photo extends \Phalcon\Mvc\Model
     {
         return array(
             'id' => 'id', 
-            'title' => 'title', 
+            'id_product' => 'id_product',
+            'title' => 'title',
             'meta_title' => 'meta_title', 
             'meta_keywords' => 'meta_keywords', 
             'meta_description' => 'meta_description', 
@@ -66,6 +73,11 @@ class Photo extends \Phalcon\Mvc\Model
             'standart' => 'standart', 
             'big' => 'big'
         );
+    }
+
+    public function initialize()
+    {
+        $this->belongsTo("id_product", "Product", "id");
     }
 
 }

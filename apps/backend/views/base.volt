@@ -16,9 +16,7 @@
             <div class=" col-md-2 sidebar">
                 {% block left_menu %}{% include "partials/left_menu.volt" %}{% endblock %}
             </div>
-            <div class="col-md-10 col-md-offset-2 main">
-                {% block content %}{% endblock %}
-            </div>
+            {% block content %}{% endblock %}
         </div>
     </div>
     {{ assets.outputJs() }}
