@@ -55,6 +55,11 @@ $adminRout->add('/:controller', [
     'action' => 'list'
 ]);
 
+$adminRout->add('/:controller/new', [
+    'controller' => 1,
+    'action' => 'edit'
+]);
+
 $adminRout->add('/:controller/:int', [
     'controller' => 1,
     'action' => 'edit',

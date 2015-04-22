@@ -41,7 +41,7 @@ class ProductForm extends \Phalcon\Forms\Form
         $this->add($email);
 
         $price = new Text('price', array(
-            'placeholder' => 'Описание'
+            'placeholder' => 'Цена'
         ));
 
         $price->addValidators([
@@ -74,6 +74,37 @@ class ProductForm extends \Phalcon\Forms\Form
                 ]
             )
         );
+
+        $url = new Text('meta_title', array(
+            'placeholder' => 'meta title'
+        ));
+        $url->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Введите мета титул'
+            ))
+        ));
+        $this->add($url);
+
+        $url = new Text('meta_keyword', array(
+            'placeholder' => 'meta keyword'
+        ));
+        $url->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Введите ключевые слова'
+            ))
+        ));
+        $this->add($url);
+
+        $email = new TextArea('meta_description', array(
+            'placeholder' => 'Описание'
+        ));
+
+        $email->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Описание обязательно'
+            ))
+        ));
+        $this->add($email);
 
     }
 }

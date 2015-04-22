@@ -58,9 +58,6 @@ class ProductController extends CrudController
 
         foreach($tags as $tagId){
 
-           // if (in_array($tagId, $tags))
-            //    continue;
-
             $tagLink = new \TagLink();
 
             $tagLink->save([

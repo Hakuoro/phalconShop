@@ -2,6 +2,7 @@
 {% block title %}Товары{% endblock %}
 
 {% block content %}
+    <a href="/haku/product/new">Добавить товар</a>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -16,7 +17,7 @@
             <tr>
                 <th scope="row"><a href="/haku/product/{{ product.id }}">{{ product.title|e }}</a></th>
                 <td>{% for tagItem in product.tag %}<a href="/haku/tag/{{ tagItem.id }}">{{ tagItem.name |e }}</a> {% if !loop.last %}, {% endif %} {% endfor %}</td>
-                <td><a href="#">Удалить</a></td>
+                <td><a href="/haku/product/delete/{{ product.id }}" onclick="return confirm('are u shure?') ? true : false;">Удалить</a></td>
             </tr>
 
         {% endfor %}

@@ -37,9 +37,10 @@ class CrudController extends \Phalcon\Mvc\Controller
 
     public function editAction($id)
     {
+        /** @var \Phalcon\Mvc\Model $model */
         $model = $this->modelClass;
 
-        $this->entity = $model::findFirst($id);
+        $this->entity = $id?$model::findFirst($id):new $model();
 
         $form = new $this->formClass($this->entity);
 
@@ -48,10 +49,20 @@ class CrudController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()){
 
             if ($form->isValid($this->request->getPost())){
+
+
+
                 if ($this->entity->save()){
+
                     $this->saveTags();
                     $this->response->redirect($this->baseUrl . $this->entity->id);
+                }else{
+
+                    print_r($this->entity->getMessages());
+                    exit;
+
                 }
+
             }else{
                 print_r($form->getMessages());
                 exit;
@@ -65,9 +76,31 @@ class CrudController extends \Phalcon\Mvc\Controller
 
     }
 
-    protected function saveTags()
-    {
 
+    public function deleteAction($id){
+
+
+        if (!$id)
+            return;
+
+        /** @var \Phalcon\Mvc\Model $model */
+        $model = $this->modelClass;
+
+        $this->entity = $model::findFirst((int)$id);
+
+        if ($this->entity){
+            if ($this->entity->delete()){
+                $this->response->redirect($this->baseUrl);
+            }else{
+
+                print_r($this->entity->getMessages());
+                exit;
+
+            }
+        }
     }
+
+
+    protected function saveTags(){}
 
 }

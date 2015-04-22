@@ -53,6 +53,27 @@
             </div>
 
             <div class="form-group">
+                <label for="inputMeta1" class=" col-md-2 control-label">Мета титул</label>
+                <div class="col-md-4">
+                    {{ form.render('meta_title', ['class':"form-control", 'id':'inputMeta1']) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputMeta2" class=" col-md-2 control-label">Мета слова</label>
+                <div class="col-md-4">
+                    {{ form.render('meta_keyword', ['class':"form-control", 'id':'inputMeta2']) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputMeta3" class=" col-md-2 control-label">Мета описание</label>
+                <div class="col-md-4">
+                    {{ form.render('meta_description', ['class':"form-control", 'id':'inputMeta3', 'rows':'5']) }}
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-md-offset-2 col-md-4">
                     <button type="submit" class="btn btn-default">Сохранить</button>
                 </div>
