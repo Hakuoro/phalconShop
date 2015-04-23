@@ -1293,7 +1293,7 @@ class UploadHandler
     }
 
     public function post($print_response = true) {
-       /* if ($this->get_query_param('_method') === 'DELETE') {
+        if ($this->get_query_param('_method') === 'DELETE') {
             return $this->delete($print_response);
         }
         $upload = $this->get_upload_data($this->options['param_name']);
@@ -1345,38 +1345,9 @@ class UploadHandler
             }
         }
         $response = array($this->options['param_name'] => $files);
-        return $this->generate_response($response, $print_response);*/
-
-
-        $prefix = 'files'; //our name of the input field
-
-        if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
-            return $this->delete($print_response);
-        }
-
-        $files = $this->new_handle_file_upload($prefix);
-
-        return $this->new_generate_response(array('files' => $files));
+        return $this->generate_response($response, $print_response);
     }
 
-    protected function new_handle_file_upload($prefix) {
-        $file = new stdClass();
-        $file->name = $_POST[$prefix."_name"];
-        $file->type = $_POST[$prefix."_content_type"];
-        $file->url = $_POST[$prefix."_path"];
-        $file->size = $_POST[$prefix."_size"];
-        $file->error = 'success';
-        $this->set_additional_file_properties($file);
-        $s[]=$file;
-        return $s;
-    }
-
-    protected function new_generate_response($content) {
-        $this->head();
-        $json = json_encode($content);
-        $this->body($json);
-        return $content;
-    }
 
     public function delete($print_response = true) {
         $file_names = $this->get_file_names_params();

@@ -35,9 +35,12 @@ class BackendAssets extends \Phalcon\Mvc\User\Component
             ->addJs('js/fm.selectator.jquery.js')
             ->addJs('js/product.select.js')
             ->addJs('js/vendor/jquery.ui.widget.js')
+            ->addJs('js/load.image.js')
+            ->addJs('js/jquery.iframe-transport.js')
             ->addJs('js/jquery.fileupload.js')
             ->addJs('js/jquery.fileupload-process.js')
             ->addJs('js/jquery.fileupload-image.js')
+            ->addJs('js/file.upload.js')
 
         ;
 
