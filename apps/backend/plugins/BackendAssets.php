@@ -30,17 +30,13 @@ class BackendAssets extends \Phalcon\Mvc\User\Component
 
         $controller->assets
             ->addJs('//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js', false)
+            ->addJs('//code.jquery.com/ui/1.11.3/jquery-ui.min.js', false)
             ->addJs('js/bootstrap.min.js')
             ->addJs('js/holder.js')
             ->addJs('js/fm.selectator.jquery.js')
             ->addJs('js/product.select.js')
-            ->addJs('js/vendor/jquery.ui.widget.js')
-            ->addJs('js/load.image.js')
-            ->addJs('js/jquery.iframe-transport.js')
-            ->addJs('js/jquery.fileupload.js')
-            ->addJs('js/jquery.fileupload-process.js')
-            ->addJs('js/jquery.fileupload-image.js')
-            ->addJs('js/file.upload.js')
+            ->addJs('js/uploader/src/jquery.picture.cut.js')
+            ->addJs('js/image.upload.js')
 
         ;
 

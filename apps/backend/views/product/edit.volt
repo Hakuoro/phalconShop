@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <div class="col-md-6 col-md-offset-2 main">
+    <div class="col-md-6 col-md-offset-2 main" style="float: left;">
         <form class="form-horizontal" method="post" >
 
             {{ form.render('id') }}
@@ -81,20 +81,7 @@
     </div>
 
     <div class="col-md-4 col-md-offset-8 main">
-        <span class="btn btn-success fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>Add files...</span>
-        <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="files[]" multiple>
-    </span>
-        <br>
-        <br>
-        <!-- The global progress bar -->
-        <div id="progress" class="progress">
-            <div class="progress-bar progress-bar-success"></div>
-        </div>
-        <!-- The container for the uploaded files -->
-        <div id="files" class="files"></div>
+        <div id="container_image"></div>
 
     </div>
 {% endblock %}
