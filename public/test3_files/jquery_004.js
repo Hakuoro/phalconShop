@@ -32,7 +32,7 @@ var version = '1.4.13',
       // `this` is the triggering element
       afterScroll: function() {},
       easing: 'swing',
-      speed:1000,
+      speed:500,
 
       // coefficient for "auto" speed
       autoCoefficent: 2,
