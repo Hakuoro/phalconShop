@@ -1,0 +1,114 @@
+/* ==============================================================
+
+Template name : Lotek modern app landing page
+Categorie : Landing page
+Author : Nce18cex
+Version : v1.0.0
+Created : 03 june 2014
+Last update : 12 june 2014
+
+-----------------------------------------------------------------
+CSS structure
+-----------------------------------------------------------------
+
+01. Color
+02. Background
+03. Border
+04. Image background
+
+============================================================== */
+
+/*
+Color
+================================== */
+a,
+a:hover,
+.navbar-default .navbar-nav li a.selected,
+.navbar-default .navbar-nav .active a,
+.navbar-default .navbar-nav .dropdown.active a,
+.navbar-default .navbar-nav .active a:hover,
+.navbar-default .navbar-nav .dropdown.active a:hover,
+.navbar-default .navbar-nav .active a:focus,
+.navbar-default .navbar-nav .dropdown.active a:focus,
+.navbar-default .navbar-nav li a:hover,
+.icon-title,
+.company-name,
+.image-caption .zoom:hover,
+.image-title a:hover,
+.date,
+.meta-post,
+.validation,
+.social-network:hover,
+.style1 .accordion-heading a:hover i,
+.style2 .accordion-heading a:hover,
+.tabbable.style1 .tabber li a:hover,
+.tabbable.style2 .tabber li a:hover,
+.tabbable.style2 .tabber li.active a,
+.tabbable.style2 .tabber li.active a:hover,
+.tabbable.style2 .tabber li.active a:focus,
+.tabbable.style2 .tabber li.active a:active{
+	color:#fe5d55;
+}
+
+/*
+Background
+================================== */
+body,
+.colorbg,
+div.pp_default .pp_close:hover,
+.icon-social:hover,
+.pricing-price,
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:active,
+.subscribe-button:hover,
+.pager li > a:hover,
+.pager li > span:hover,
+.item-detail,
+.style2 .accordion-heading a:hover i,
+.style1 .accordion-heading a:hover,
+.btn-flat,
+#home .btn-flat:hover {
+	background-color:#fe5d55;
+}
+
+/*
+Border
+================================== */
+.navbar-default .navbar-nav li a.selected,
+.navbar-default .navbar-nav .active a,
+.navbar-default .navbar-nav .dropdown.active a,
+.navbar-default .navbar-nav .active a:hover,
+.navbar-default .navbar-nav .dropdown.active a:hover,
+.navbar-default .navbar-nav .active a:focus,
+.navbar-default .navbar-nav .dropdown.active a:focus,
+.colorbg .icon-title,
+.image-caption .zoom:hover,
+.image-title a:hover,
+.form-control:focus,
+.totop,
+.social-network:hover,
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:active,
+input.subscribe:focus,
+.pager li > a:hover,
+.pager li > span:hover,
+.style2 .accordion-heading a:hover,
+.tabbable.style1 .tabber li a:hover,
+.tabbable.style2 .tabber li a:hover,
+.tabbable.style2 .tabber li.active a,
+.tabbable.style2 .tabber li.active a:hover,
+.tabbable.style2 .tabber li.active a:focus,
+.tabbable.style2 .tabber li.active a:active,
+.btn-flat,
+#home .btn-flat:hover{
+	border-color:#fe5d55;
+}
+
+/*
+Image background
+================================== */
+.colorbg .divider{
+	background:url(divider-color-bg.png) no-repeat top center;
+}
