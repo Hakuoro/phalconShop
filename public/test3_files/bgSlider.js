@@ -8,11 +8,11 @@ var slideshowSpeed = 8000;
 // Variable to store the images we need to set as background
 // which also includes some text and url's.
 var photos = [ {
-		"image" : "../img/bgslider/bg1.jpg",
+		"image" : "/test/img/back1.jpg",
 	}, {
-		"image" : "../img/bgslider/bg2.jpg",
+		"image" : "/test/img/back1.jpg",
 	}, {
-		"image" : "../img/bgslider/bg3.jpg",
+		"image" : "/test/img/back1.jpg",
 	}
 ];
 
@@ -92,7 +92,7 @@ $(document).ready(function() {
 		
 		// Set the background image of the new active container
 		$("#animated-bg" + activeContainer).css({
-			"background-image" : "url(images/" + photoObject.image + ")",
+			"background-image" : "url(" + photoObject.image + ")",
 			"display" : "block",
 			"z-index" : currentZindex
 		});

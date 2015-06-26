@@ -2,6 +2,7 @@
 
 namespace Multiple\Frontend;
 
+use Multiple\Frontend\Plugins\FrontendAssets;
 use Phalcon\DI\FactoryDefault;
 
 class Module
@@ -15,6 +16,8 @@ class Module
 		$loader->registerNamespaces(array(
 			'Multiple\Frontend\Controllers' => APP_PATH.'apps/frontend/controllers/',
 			'Multiple\Frontend\Models' => APP_PATH.'apps/frontend/models/',
+            'Multiple\Frontend\Plugins' => APP_PATH.'apps/frontend/plugins/',
+            'Multiple\Frontend\Forms' => APP_PATH.'apps/frontend/forms/',
 		));
 
 		$loader->register();
@@ -30,11 +33,18 @@ class Module
 		$di->set('dispatcher', function () {
 			$dispatcher = new \Phalcon\Mvc\Dispatcher();
 
+            //Attach a event listener to the dispatcher
+            $eventManager = new \Phalcon\Events\Manager();
+            //$eventManager->attach('dispatch', new AclListener('backend'));
+            $eventManager->attach('dispatch', new FrontendAssets('frontend'));
+
+
 			//Attach a event listener to the dispatcher
 			//$eventManager = new \Phalcon\Events\Manager();
 			//$eventManager->attach('dispatch', new \Acl('frontend'));
 
 			//$dispatcher->setEventsManager($eventManager);
+            $dispatcher->setEventsManager($eventManager);
 
 			$dispatcher->setDefaultNamespace('Multiple\Frontend\Controllers\\');
 			return $dispatcher;
