@@ -107,3 +107,9 @@
     <div><input type="submit" value="Построить маршрут" onclick="createRoute();" /></div>
     <div id="map"></div>
 {% endblock %}
+
+{% block left_menu %}
+    {% for rout in routes %}
+        <li><a href="/route?id={{ rout.id }}">{{ rout.name|e }}</a></li>
+    {% endfor %}
+{% endblock %}
