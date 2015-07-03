@@ -12,12 +12,33 @@ class RouteController extends \Phalcon\Mvc\Controller
         $this->view->disable();
         if ($routeId){
 
-            $this->view->route = \Route::findFirst(['id' => $routeId]);
+            $route = \Route::findFirst(['id' => $routeId]);
 
-            $this->view->points = \Point::find(['id_route' => $routeId, 'order' => 'num']);
-            $this->view->distances = \Distance::find(['id_route' => $routeId, 'order' => 'xy']);
+            $points = \Point::find(['id_route' => $routeId, 'order' => 'num']);
+            $distances = \Distance::find(['id_route' => $routeId, 'order' => 'xy']);
+
+            $ret = [
+                'status' => 200,
+                'data'  => [
+                    'route' => $route->toArray(),
+                    'points' => $points->toArray(),
+                    'distances' => $distances->toArray()
+                ]
+            ];
+
+            echo json_encode($ret);
+
+            exit;
 
         }
+
+        $ret = [
+            'status' => 400
+        ];
+
+        echo json_encode($ret);
+
+        exit;
 
 	}
 }
