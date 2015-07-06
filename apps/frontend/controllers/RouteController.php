@@ -55,7 +55,7 @@ class RouteController extends \Phalcon\Mvc\Controller
         }
 
         $ret = [
-            'status' => 400
+            'status' => 200
         ];
 
         echo json_encode($ret);

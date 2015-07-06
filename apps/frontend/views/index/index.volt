@@ -29,7 +29,6 @@
 
          */
 
-
         function createRoute() {
             // Удаление старого маршрута
             if (mapRoute) {
@@ -43,7 +42,7 @@
             ymaps.route([routeFrom, routeTo], {mapStateAutoApply:true}).then(
                     function(route) {
 
-                        var coordinats = [];
+                       /* var coordinats = [];
 
                         route.getPaths().each(function(path) {
                             var segs = path.getSegments();
@@ -75,12 +74,12 @@
                             strokeWidth: 4,
                             // Коэффициент прозрачности.
                             strokeOpacity: 0.5
-                        });
+                        });*/
 
 
-                        //map.geoObjects.add(route);
-                        map.geoObjects
-                                .add(myPolyline);
+                        map.geoObjects.add(route);
+                        /*map.geoObjects
+                                .add(myPolyline);*/
                         //document.getElementById('route-length').innerHTML = 'Длина маршрута = ' + route.getHumanLength();
                         mapRoute = route;
                     },
@@ -88,7 +87,55 @@
                         alert('Невозможно построить маршрут');
                     }
             );
+
+
+
         }
+
+
+        function newRoute() {
+
+            if (mapRoute) {
+                map.geoObjects.remove(mapRoute);
+            }
+
+            mapRoute = null;
+
+            $('#route-from').val('');
+            $('#route-to').val('');
+        }
+
+        function saveRoute() {
+
+            if (!mapRoute) {
+                return ;
+            }
+
+            var routeName=prompt('Название маршрута','')
+
+            if (routeName){
+
+                var coordinats = [];
+
+                mapRoute.getPaths().each(function(path) {
+                    var segs = path.getSegments();
+
+                    segs.forEach(function(segment) {
+                        segment.getCoordinates().forEach(function(point){
+                            coordinats.push(point);
+                        });
+
+                    });
+
+                });
+
+            }
+
+
+
+
+        }
+
     </script>
 
 {% endblock %}
@@ -104,11 +151,15 @@
 {% block content %}
     <div>От: <input type="text" id="route-from" value="Москва, Белорусский вокзал" /></div>
     <div>До: <input type="text" id="route-to" value="Москва, Лефортово" /></div>
-    <div><input type="submit" value="Построить маршрут" onclick="createRoute();" /></div>
+    <div>
+        <input type="submit" value="Построить маршрут" onclick="createRoute();" />
+        <input type="submit" value="Сохранить маршрут" onclick="saveRoute();" />
+    </div>
     <div id="map"></div>
 {% endblock %}
 
 {% block left_menu %}
+    <li><a href="#" onclick="newRoute();">Новый маршрут</a></li>
     {% for rout in routes %}
         <li><a href="/route?id={{ rout.id }}">{{ rout.name|e }}</a></li>
     {% endfor %}
