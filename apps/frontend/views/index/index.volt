@@ -12,7 +12,7 @@
                 zoom: 12,
                 controls: []
             });
-            map.controls.add('routeEditor');
+            //map.controls.add('routeEditor');
         });
 
 
@@ -42,6 +42,7 @@
             ymaps.route([routeFrom, routeTo], {mapStateAutoApply:true}).then(
                     function(route) {
 
+                        console.log(route.getLength());
                        /* var coordinats = [];
 
                         route.getPaths().each(function(path) {
@@ -126,8 +127,21 @@
                         });
 
                     });
-
                 });
+
+                var data = {
+                        'name':routeName,
+                        'coordinats':coordinats,
+                        'id':''
+                };
+
+                var posting = $.post( '/route/save', JSON.stringify( data ) );
+/*
+                // Put the results in a div
+                posting.done(function( data ) {
+                    //var content = $( data ).find( "#content" );
+                    //$( "#result" ).empty().append( content );
+                });*/
 
             }
 

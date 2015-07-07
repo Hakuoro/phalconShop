@@ -8,6 +8,7 @@ use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
+use Phalcon\Mvc\Model\Manager as ModelsManager;
 
 
 $config = new ConfigIni(APP_PATH . 'common/config/config.ini');
@@ -109,6 +110,10 @@ $di->set('db', function() use ($config) {
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
         ]
     ));
+});
+
+$di->set('modelsManager', function() {
+    return new ModelsManager();
 });
 
 $di->set('session', function() {
