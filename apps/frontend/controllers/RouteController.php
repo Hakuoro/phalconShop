@@ -63,19 +63,31 @@ class RouteController extends \Phalcon\Mvc\Controller
             $route->save();
 
             $firstPoint = null;
-            $i = 0;
+            $i = 1;
+            $count = 0;
+            $sql = '';
+
+            //$phql = "INSERT INTO Point (id_route, x, y, num) VALUES (:id_route:, :x:, :y:, :num:)";
+
+
+
+            $start = 'INSERT INTO point (id_route, x, y, num) VALUES ';
 
             foreach ($postData->coordinats as $point){
 
-                $pointModel = new \Point();
-                $pointModel->id_route = $route->id;
 
-                $pointModel->x = $point[0];
-                $pointModel->y = $point[1];
+                $sql .= '('.(int)$route->id.','.$point[0].','.$point[1].','.$i++.')';
+                $count++;
 
-                $pointModel->num = $i;
+                if ($count < 500 ){
+                    $sql .= ',';
+                }else{
 
-                $pointModel->save();
+                    $this->db->query($start.$sql);
+
+                    $sql = '';
+                    $count = 0;
+                }
 
 
               /*  if ($firstPoint !== null){
@@ -90,9 +102,12 @@ class RouteController extends \Phalcon\Mvc\Controller
                 }
 
                 $firstPoint = $pointModel;*/
-                $i++;
             }
 
+        }
+
+        if ($count > 0 ){
+            $this->db->query(substr($start.$sql, 0, -1));
         }
 
         $ret = [
