@@ -1,30 +1,17 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Boris
+ * Date: 13.07.2015
+ * Time: 21:29
+ */
+use Phalcon\Logger\Adapter\File as FileAdapter;
 
-namespace Multiple\Frontend\Controllers;
-
-class IndexController extends \Phalcon\Mvc\Controller
+class mainTask extends \Phalcon\CLI\Task
 {
 
-	public function indexAction()
-	{
-
-        $this->view->user = \User::findFirst(['id' => 1]);
-
-        $this->view->routes = \Route::find(['id_route' => $this->view->user->id]);
-
-	}
-
-    public function routeAction()
-    {
-
-        print_r($this->request->get('id'));
-        exit;
-
-    }
-
-    public function opskinAction(){
-
-        sleep(rand(1,12));
+    public function mainAction() {
+        sleep(rand(1,6));
 
         $page = 1;
         $req = 'curl "https://opskins.com/ajax/history_scroll.php" -H "cookie: __cfduid=d2863d37a42a52c534ef948fc9908890f1436810572; PHPSESSID=7p97u2sl4p6u5ajflklut65gq4; _gat=1; _ga=GA1.2.153779050.1436806777; __mmapiwsid=64527ADA-2989-11E5-A17E-094F559CF7BD:12c1c586ca439f9788e2255bea9fd4900af27f93" -H "origin: https://opskins.com" -H "accept-encoding: gzip, deflate" -H "accept-language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4" -H "x-requested-with: XMLHttpRequest" -H "user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.132 Safari/537.36" -H "content-type: application/x-www-form-urlencoded; charset=UTF-8" -H "accept: */*" -H "cache-control: max-age=0" -H "referer: https://opskins.com/?loc=sale_history" --data "type=scroll&page='.$page.'" --compressed -k';
@@ -41,18 +28,19 @@ class IndexController extends \Phalcon\Mvc\Controller
         preg_match_all($pattern, $res, $match);
 
         $insert = 0;
+        $logger = new FileAdapter("/www/logs/lke/cli.log");
         if ($r = count($match[1])){
 
             for ($i=0;$i<$r;$i++){
 
 
-                $op = \Opskins::findFirst("name = ".($this->db->escapeString($match[2][$i]))." AND sale_time= '".$match[5][$i]."' AND price = ".$match[3][$i]." AND when_sale =".(int)strtotime($match[6][$i]));
+                $op = Opskins::findFirst("name = ".($this->db->escapeString($match[2][$i]))." AND sale_time= '".$match[5][$i]."' AND price = ".$match[3][$i]." AND when_sale =".(int)strtotime($match[6][$i]));
 
                 if ($op) {
                     continue;
                 }
 
-                $op = new \Opskins();
+                $op = new Opskins();
 
                 $op->name = $match[2][$i];
                 $op->link = $match[1][$i];
@@ -64,20 +52,19 @@ class IndexController extends \Phalcon\Mvc\Controller
                 $item = explode('item=', $op->link);
                 $op->op_id = $item[1];
 
-                var_dump($op->save());
+                if (!$op->save()){
+                    $logger->error("Cannot save");
+                }
                 $insert++;
 
             }
 
 
+        }else {
+            $logger->error("Cannot find data. Response".$res);
         }
-
-
-
-
-        echo "Find: $r. Inserted $insert<br/>";
+        $logger->info("Find: $r. Inserted $insert");
         exit;
-
     }
 
 }
