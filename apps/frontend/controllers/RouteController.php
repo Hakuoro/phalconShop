@@ -200,7 +200,7 @@ class RouteController extends \Phalcon\Mvc\Controller
     }
 
 
-    function calculateTheDistance ($lat1, $long1, $lat2, $long2 /*$φA, $λA, $φB, $λB*/) {
+    protected function calculateTheDistance ($lat1, $long1, $lat2, $long2 /*$φA, $λA, $φB, $λB*/) {
 
         // перевести координаты в радианы
         $lat1 = $lat1 * M_PI / 180;
