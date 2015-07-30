@@ -1,10 +1,31 @@
 {% extends "base.volt" %}
 {% block title %}Мои маршруты{% endblock %}
+{% block content %}
+    <div>От: <input type="text" id="route-from" value="Москва, Белорусский вокзал" /></div>
+    <div>До: <input type="text" id="route-to" value="Москва, Лефортово" /></div>
+    <div>
+        <input type="submit" value="Построить маршрут" onclick="createRoute();" />
+        <input type="submit" value="Сохранить маршрут" onclick="saveRoute();" />
+    </div>
+    <div id="map"></div>
+{% endblock %}
+
+{% block left_menu %}
+    <div id="route-menu">
+        <li><a href="#" onclick="newRoute();">Новый маршрут</a></li>
+    {% for rout in routes %}
+        <li id="li-route-{{ rout.id }}">
+            <a onclick="loadRoute({{ rout.id }})" href="#?{{ rout.id }}">{{ rout.name|e }}</a>
+            <a onclick="deleteRoute({{ rout.id }})" href="#?{{ rout.id }}">x</a>
+        </li>
+    {% endfor %}
+    </div>
+{% endblock %}
 {% block js %}
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"> </script>
 
     <script>
-        var map, mapRoute;
+        var map, mapRoute, mapLine;
 
         ymaps.ready(function() {
             map = new ymaps.Map('map', {
@@ -29,11 +50,80 @@
 
          */
 
+
+        function deleteRoute(routeId){
+            var posting = $.post( '/route/delete?id='+routeId );
+            posting.done(function( data ) {
+
+                var result = jQuery.parseJSON(data);
+
+                if (result.status == 200) {
+                    clearMap();
+                    $("#li-route-"+routeId).remove();
+                }
+
+
+            });
+        }
+
+        function loadRoute(routeId){
+
+
+            var posting = $.post( '/route?id='+routeId );
+
+             // Put the results in a div
+             posting.done(function( data ) {
+                //var content = $( data ).find( "#content" );
+                //$( "#result" ).empty().append( content );
+
+
+                 var result = jQuery.parseJSON(data);
+
+                 var coordinats = [];
+
+                 jQuery.each( result.data.points, function( i, point ) {
+                     coordinats.push([point.x,point.y])
+                 });
+
+                 var myPolyline = new ymaps.Polyline(
+                 // Указываем координаты вершин ломаной.
+                    coordinats
+                    , {
+                         // Описываем свойства геообъекта.
+                        // Содержимое балуна.
+                        balloonContent: "Ломаная линия"
+                    }, {
+                         // Задаем опции геообъекта.
+                         // Отключаем кнопку закрытия балуна.
+                         balloonCloseButton: false,
+                         // Цвет линии.
+                         strokeColor: "#000000",
+                         // Ширина линии.
+                         strokeWidth: 4,
+                         // Коэффициент прозрачности.
+                         strokeOpacity: 0.5
+                 });
+
+
+                 clearMap();
+
+                 map.geoObjects.add(myPolyline);
+
+                 map.setBounds(map.geoObjects.getBounds());
+
+
+                 mapLine = myPolyline;
+
+
+             });
+
+            return false;
+
+        }
+
         function createRoute() {
             // Удаление старого маршрута
-            if (mapRoute) {
-                map.geoObjects.remove(mapRoute);
-            }
+            clearMap();
 
             var routeFrom = document.getElementById('route-from').value;
             var routeTo = document.getElementById('route-to').value;
@@ -41,47 +131,7 @@
             // Создание маршрута
             ymaps.route([routeFrom, routeTo], {mapStateAutoApply:true}).then(
                     function(route) {
-
-                        console.log(route.getLength());
-                       /* var coordinats = [];
-
-                        route.getPaths().each(function(path) {
-                            var segs = path.getSegments();
-
-                            segs.forEach(function(segment) {
-                                segment.getCoordinates().forEach(function(point){
-                                    console.log(point);
-                                    coordinats.push(point)
-                                });
-
-                            });
-
-                        });
-
-                        var myPolyline = new ymaps.Polyline(
-                            // Указываем координаты вершин ломаной.
-                            coordinats
-                        , {
-                            // Описываем свойства геообъекта.
-                            // Содержимое балуна.
-                            balloonContent: "Ломаная линия"
-                        }, {
-                            // Задаем опции геообъекта.
-                            // Отключаем кнопку закрытия балуна.
-                            balloonCloseButton: false,
-                            // Цвет линии.
-                            strokeColor: "#000000",
-                            // Ширина линии.
-                            strokeWidth: 4,
-                            // Коэффициент прозрачности.
-                            strokeOpacity: 0.5
-                        });*/
-
-
                         map.geoObjects.add(route);
-                        /*map.geoObjects
-                                .add(myPolyline);*/
-                        //document.getElementById('route-length').innerHTML = 'Длина маршрута = ' + route.getHumanLength();
                         mapRoute = route;
                     },
                     function(error) {
@@ -93,17 +143,27 @@
 
         }
 
-
-        function newRoute() {
+        function clearMap(){
 
             if (mapRoute) {
                 map.geoObjects.remove(mapRoute);
             }
 
+            if (mapLine) {
+                map.geoObjects.remove(mapLine);
+            }
+        }
+
+
+
+        function newRoute() {
+
+            clearMap();
+
             mapRoute = null;
 
-            $('#route-from').val('');
-            $('#route-to').val('');
+            //$('#route-from').val('');
+            //$('#route-to').val('');
         }
 
         function saveRoute() {
@@ -131,23 +191,17 @@
 
                 var data = {
                         'name':routeName,
-                        'coordinats':coordinats,
-                        'id':''
+                        'coordinats':coordinats
                 };
 
                 var posting = $.post( '/route/save', JSON.stringify( data ) );
-/*
+
                 // Put the results in a div
                 posting.done(function( data ) {
-                    //var content = $( data ).find( "#content" );
-                    //$( "#result" ).empty().append( content );
-                });*/
-
+                    var result = jQuery.parseJSON(data);
+                    $("#route-menu").append('<li id="li-route-'+result.routeId+'"><a onclick="loadRoute('+result.routeId+')" href="#?'+result.routeId+'">'+result.routeName+'</a>&nbsp;<a onclick="deleteRoute('+result.routeId+')" href="#?'+result.routeId+'">x</a></li>');
+                });
             }
-
-
-
-
         }
 
     </script>
@@ -160,21 +214,4 @@
             height: 600px;
         }
     </style>
-{% endblock %}
-
-{% block content %}
-    <div>От: <input type="text" id="route-from" value="Москва, Белорусский вокзал" /></div>
-    <div>До: <input type="text" id="route-to" value="Москва, Лефортово" /></div>
-    <div>
-        <input type="submit" value="Построить маршрут" onclick="createRoute();" />
-        <input type="submit" value="Сохранить маршрут" onclick="saveRoute();" />
-    </div>
-    <div id="map"></div>
-{% endblock %}
-
-{% block left_menu %}
-    <li><a href="#" onclick="newRoute();">Новый маршрут</a></li>
-    {% for rout in routes %}
-        <li><a href="/route?id={{ rout.id }}">{{ rout.name|e }}</a></li>
-    {% endfor %}
 {% endblock %}

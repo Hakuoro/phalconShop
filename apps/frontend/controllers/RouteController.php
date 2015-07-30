@@ -11,20 +11,30 @@ class RouteController extends \Phalcon\Mvc\Controller
 	{
         $routeId = $this->request->get('id')?:null;
 
+
+
         $this->view->disable();
         if ($routeId){
 
-            $route = \Route::findFirst(['id' => $routeId]);
+            $route = \Route::findFirst($routeId);
 
-            $points = \Point::find(['id_route' => $routeId, 'order' => 'num']);
-            $distances = \Distance::find(['id_route' => $routeId, 'order' => 'xy']);
+            $points = \Point::find([
+                'conditions' => 'id_route = :id_route:',
+                'bind'       => ['id_route' => $route->id],
+                'order' => 'num',
+                'columns' => 'x,y'
+            ]);
+
+
+            //$distances = \Distance::find(['id_route' => $routeId, 'order' => 'xy']);
+
 
             $ret = [
                 'status' => 200,
                 'data'  => [
                     'route' => $route->toArray(),
                     'points' => $points->toArray(),
-                    'distances' => $distances->toArray()
+                    //'distances' => $distances->toArray()
                 ]
             ];
 
@@ -51,7 +61,7 @@ class RouteController extends \Phalcon\Mvc\Controller
             $postData = json_decode(file_get_contents('php://input'));
 
 
-            $route = !empty($postData->id)?\Route::findFirst(['id' => (int) $postData->id]):new \Route();
+            $route = !empty($postData->id)?\Route::findFirst((int) $postData->id):new \Route();
             $route->name = $postData->name;
             $route->id_user = 1;
 
@@ -104,15 +114,84 @@ class RouteController extends \Phalcon\Mvc\Controller
                 $firstPoint = $pointModel;*/
             }
 
+            if ($count > 0 ){
+                $this->db->query(substr($start.$sql, 0, -1));
+            }
+
+            $ret = [
+                'status' => 200,
+                'routeId' => $route->id,
+                'routeName' => $route->name
+            ];
+
+        }else {
+
+            $ret = [
+                'status' => 200,
+            ];
         }
 
-        if ($count > 0 ){
-            $this->db->query(substr($start.$sql, 0, -1));
-        }
+        echo json_encode($ret);
 
-        $ret = [
-            'status' => 200
-        ];
+        exit;
+
+    }
+
+    public function deleteAction()
+    {
+
+        if ($this->request->isPost() && $this->request->isAjax()){
+
+            $routeId = $this->request->get('id')?:null;
+
+
+            if (empty($routeId)){
+
+                $ret = [
+                    'status' => 400
+                ];
+
+                echo json_encode($ret);
+                exit;
+            }
+
+            $route = \Route::findFirst($routeId);
+
+
+            if (!$route){
+
+                $ret = [
+                    'status' => 400
+                ];
+
+                echo json_encode($ret);
+                exit;
+            }
+
+            // delete points
+            $this->modelsManager
+                ->createQuery("DELETE FROM Point WHERE id_route = :route:")
+                ->execute(['route' => $route->id]);
+
+
+            if ($route->delete()){
+                $ret = [
+                    'status' => 200
+                ];
+            }else {
+                $ret = [
+                    'status' => 200
+                ];
+            }
+
+
+
+        }else {
+
+            $ret = [
+                'status' => 400
+            ];
+        }
 
         echo json_encode($ret);
 
