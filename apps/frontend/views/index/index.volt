@@ -1,11 +1,20 @@
 {% extends "base.volt" %}
 {% block title %}Мои маршруты{% endblock %}
 {% block content %}
-    <div>От: <input type="text" id="route-from" value="Москва, Белорусский вокзал" /></div>
-    <div>До: <input type="text" id="route-to" value="Москва, Лефортово" /></div>
-    <div>
-        <input type="submit" value="Построить маршрут" onclick="createRoute();" />
-        <input type="submit" value="Сохранить маршрут" onclick="saveRoute();" />
+    <div id="new-route-div">
+        <div>От: <input type="text" id="route-from" value="Москва, Белорусский вокзал" /></div>
+        <div>До: <input type="text" id="route-to" value="Москва, Лефортово" /></div>
+        <div>
+            <input type="submit" value="Построить маршрут" onclick="createRoute();" />
+            <input type="submit" value="Сохранить маршрут" onclick="saveRoute();" />
+        </div>
+    </div>
+
+    <div id="add-training-div">
+        <div>Расстояние(метры): <input type="text" id="training-distance" value="" /></div>
+        <div>
+            <input type="submit" value="Добавить дистанцию" onclick="addTraining();" />
+        </div>
     </div>
     <div id="map"></div>
 {% endblock %}
@@ -25,7 +34,7 @@
     <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"> </script>
 
     <script>
-        var map, mapRoute, mapLine;
+        var map, mapRoute, mapLine, selectedRoute;
 
         ymaps.ready(function() {
             map = new ymaps.Map('map', {
@@ -49,6 +58,27 @@
 
 
          */
+
+        function addTraining()
+        {
+
+            var distance = $("#training-distance").val();
+
+            if (distance && selectedRoute){
+
+                var posting = $.post( '/training/add?id='+selectedRoute+"&distance="+ distance);
+
+                posting.done(function( data ) {
+
+                    var result = jQuery.parseJSON(data);
+
+                    if (result.status == 200) {
+                        alert("Ok");
+                        $("#training-distance").val('');
+                    }
+                });
+            }
+        }
 
 
         function deleteRoute(routeId){
@@ -114,6 +144,8 @@
 
                  mapLine = myPolyline;
 
+                 selectedRoute = routeId;
+
 
              });
 
@@ -161,6 +193,8 @@
             clearMap();
 
             mapRoute = null;
+            selectedRoute = null;
+
 
             //$('#route-from').val('');
             //$('#route-to').val('');
@@ -200,6 +234,7 @@
                 posting.done(function( data ) {
                     var result = jQuery.parseJSON(data);
                     $("#route-menu").append('<li id="li-route-'+result.routeId+'"><a onclick="loadRoute('+result.routeId+')" href="#?'+result.routeId+'">'+result.routeName+'</a>&nbsp;<a onclick="deleteRoute('+result.routeId+')" href="#?'+result.routeId+'">x</a></li>');
+                    loadRoute(result.routeId);
                 });
             }
         }

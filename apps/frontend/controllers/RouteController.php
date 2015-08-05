@@ -2,7 +2,7 @@
 
 namespace Multiple\Frontend\Controllers;
 
-class RouteController extends \Phalcon\Mvc\Controller
+class RouteController extends BaseController
 {
 
     const EARTH_RADIUS = 6372795;
@@ -28,7 +28,6 @@ class RouteController extends \Phalcon\Mvc\Controller
 
             //$distances = \Distance::find(['id_route' => $routeId, 'order' => 'xy']);
 
-
             $ret = [
                 'status' => 200,
                 'data'  => [
@@ -38,20 +37,10 @@ class RouteController extends \Phalcon\Mvc\Controller
                 ]
             ];
 
-            echo json_encode($ret);
-
-            exit;
-
+            $this->out($ret);
         }
 
-        $ret = [
-            'status' => 400
-        ];
-
-        echo json_encode($ret);
-
-        exit;
-
+        $this->out(['status' => 400]);
 	}
 
     public function saveAction()
@@ -78,8 +67,6 @@ class RouteController extends \Phalcon\Mvc\Controller
             $sql = '';
 
             //$phql = "INSERT INTO Point (id_route, x, y, num) VALUES (:id_route:, :x:, :y:, :num:)";
-
-
 
             $start = 'INSERT INTO point (id_route, x, y, num) VALUES ';
 
@@ -131,9 +118,7 @@ class RouteController extends \Phalcon\Mvc\Controller
             ];
         }
 
-        echo json_encode($ret);
-
-        exit;
+        $this->out($ret);
 
     }
 
@@ -151,8 +136,7 @@ class RouteController extends \Phalcon\Mvc\Controller
                     'status' => 400
                 ];
 
-                echo json_encode($ret);
-                exit;
+                $this->out($ret);
             }
 
             $route = \Route::findFirst($routeId);
@@ -164,8 +148,7 @@ class RouteController extends \Phalcon\Mvc\Controller
                     'status' => 400
                 ];
 
-                echo json_encode($ret);
-                exit;
+                $this->out($ret);
             }
 
             // delete points
@@ -193,10 +176,7 @@ class RouteController extends \Phalcon\Mvc\Controller
             ];
         }
 
-        echo json_encode($ret);
-
-        exit;
-
+        $this->out($ret);
     }
 
 
