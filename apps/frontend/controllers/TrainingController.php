@@ -14,13 +14,13 @@ class TrainingController extends BaseController
             $distance = $this->request->get('distance')?:null;
 
             if (!$routeId || !$distance){
-                $this->out(['status' => 401]);
+                $this->out(['status' => 4001]);
             }
 
             $route = \Route::findFirst($routeId);
 
             if (!$route){
-                $this->out(['status' => 402]);
+                $this->out(['status' => 4002]);
             }
 
             $training = new \Training();
@@ -28,16 +28,14 @@ class TrainingController extends BaseController
             $training->distance = (int) $distance;
 
             if(!$training->save()){
-
-                print_r($training->getMessages() );
-
-                $this->out(['status' => 403]);
+                $this->out(['status' => 4003]);
             }
+
+
+            // откладываем
 
             $this->out(['status' => 200]);
 
         }
-
 	}
-
 }

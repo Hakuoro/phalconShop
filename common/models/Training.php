@@ -44,13 +44,7 @@ class Training extends \Phalcon\Mvc\Model
 
     public function initialize()
     {
-        $this->addBehavior(new Timestampable(
-            array(
-                'beforeCreate' => array(
-                    'field' => 'date'
-                )
-            )
-        ));
+        $this->skipAttributesOnCreate(['date']);
     }
 
 }
