@@ -11,15 +11,10 @@ class Opskins extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $name;
+    public $id_skin;
 
-    /**
-     *
-     * @var string
-     */
-    public $link;
 
     /**
      *
@@ -46,25 +41,17 @@ class Opskins extends \Phalcon\Mvc\Model
     public $when_sale;
 
     /**
-     *
-     * @var integer
-     */
-    public $op_id;
-
-    /**
      * Independent Column Mapping.
      */
     public function columnMap()
     {
         return array(
             'id' => 'id', 
-            'name' => 'name', 
-            'link' => 'link', 
-            'price' => 'price', 
+            'id_skin' => 'id_skin',
+            'price' => 'price',
             'sale' => 'sale', 
             'sale_time' => 'sale_time', 
             'when_sale' => 'when_sale', 
-            'op_id' => 'op_id'
         );
     }
 
