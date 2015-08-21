@@ -11,7 +11,7 @@ class mainTask extends \Phalcon\CLI\Task
 {
 
     public function mainAction() {
-       // sleep(rand(1,6));
+        sleep(rand(1,6));
 
         $page = 1;
         $req = 'curl "https://opskins.com/ajax/history_scroll.php" -H "cookie: __cfduid=d2863d37a42a52c534ef948fc9908890f1436810572; PHPSESSID=7p97u2sl4p6u5ajflklut65gq4; _gat=1; _ga=GA1.2.153779050.1436806777; __mmapiwsid=64527ADA-2989-11E5-A17E-094F559CF7BD:12c1c586ca439f9788e2255bea9fd4900af27f93" -H "origin: https://opskins.com" -H "accept-encoding: gzip, deflate" -H "accept-language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4" -H "x-requested-with: XMLHttpRequest" -H "user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.132 Safari/537.36" -H "content-type: application/x-www-form-urlencoded; charset=UTF-8" -H "accept: */*" -H "cache-control: max-age=0" -H "referer: https://opskins.com/?loc=sale_history" --data "type=scroll&page='.$page.'" --compressed -k';
