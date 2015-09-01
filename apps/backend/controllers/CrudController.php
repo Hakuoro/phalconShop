@@ -16,7 +16,7 @@ class CrudController extends \Phalcon\Mvc\Controller
     public function listAction()
     {
         $model = ($this->modelClass);
-        $entities =  $model::find();
+        $entities =  $model::find(["order" => "id DESC"]);
 
         if ($this->request->isAjax()){
             $this->view->disable();
@@ -49,8 +49,6 @@ class CrudController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()){
 
             if ($form->isValid($this->request->getPost())){
-
-
 
                 if ($this->entity->save()){
 
