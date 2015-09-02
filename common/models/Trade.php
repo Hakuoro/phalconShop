@@ -90,18 +90,21 @@ class Trade extends \Phalcon\Mvc\Model
     protected function calculateFunds()
     {
 
-        if ( !empty($this->getCashoutInfo()->rate) &&  !empty($this->sale)){
+        if ($this->sale){
 
 
             $rate = self::PAYPAL_CUT ;
 
             $this->sale_free = round($this->sale * $rate, 2);
 
-            $this->sale_rub = round($this->sale_free /  ($this->getCashoutInfo()->op_sum ) * $this->getCashoutInfo()->pal_sum , 2);
+            if ($this->getCashoutInfo()->op_sum && $this->getCashoutInfo()->pal_sum ) {
+                $this->sale_rub = round($this->sale_free / ($this->getCashoutInfo()->op_sum) * $this->getCashoutInfo()->pal_sum,
+                    2);
 
-            $this->income = round($this->sale_rub - $this->purchase, 2);
+                $this->income = round($this->sale_rub - $this->purchase, 2);
 
-            $this->income_percent = round($this->income / $this->purchase * 100, 2);
+                $this->income_percent = round($this->income / $this->purchase * 100, 2);
+            }
 
         }
     }

@@ -98,6 +98,7 @@ $di->set('voltService', function($view, $di) {
 
 
     $compiler->addFilter('fund_round', function ($resolvedArgs, $exprArgs) {
+
         return 'round(' . $resolvedArgs . ', 2)';
     });
 

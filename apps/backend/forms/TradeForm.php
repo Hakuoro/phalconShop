@@ -38,11 +38,7 @@ class TradeForm extends \Phalcon\Forms\Form
         $name = new Text('purchase', array(
             'placeholder' => 'purchase'
         ));
-        $name->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'Введите purchase'
-            ))
-        ));
+
         $this->add($name);
 
         $name = new Text('sale', array(

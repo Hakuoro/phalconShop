@@ -31,6 +31,12 @@ class CashoutInfo extends \Phalcon\Mvc\Model
      *
      * @var double
      */
+    public $cost;
+
+    /**
+     *
+     * @var double
+     */
     public $pal_sum;
 
     /**
@@ -71,13 +77,31 @@ class CashoutInfo extends \Phalcon\Mvc\Model
             'rate' => 'rate', 
             'op_date' => 'op_date', 
             'pal_date' => 'pal_date', 
-            'bank_date' => 'bank_date'
+            'bank_date' => 'bank_date',
+            'cost' => 'cost'
         );
     }
 
     public function initialize()
     {
-       $this->hasMany('id', 'Trade', 'id_cashout');
+        $this->hasMany('id', 'Trade', 'id_cashout');
+        $this->keepSnapshots(true);
+    }
+
+    protected function calculateFunds()
+    {
+
+        $this->rate = round( $this->pal_sum / $this->op_sum, 2);
+    }
+
+    public function beforeCreate()
+    {
+        $this->calculateFunds();
+    }
+
+    public function beforeUpdate()
+    {
+        $this->calculateFunds();
     }
 
 }
