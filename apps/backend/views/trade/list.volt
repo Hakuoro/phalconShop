@@ -1,10 +1,10 @@
 {% extends "base.volt" %}
-{% block title %}Товары{% endblock %}
+{% block title %}Продажи{% endblock %}
 
 {% block content %}
     <div class="col-md-10 col-md-offset-2 main">
-        <a href="/haku/trade/new">Добавить покупку</a>
-        <table class="table table-hover">
+        <a href="/haku/trade/new">Добавить продажу</a>
+        <table class="table table-striped">
             <thead>
             <tr>
                 <th>Дата Кашаута</th>
@@ -19,7 +19,6 @@
             </tr>
             </thead>
             <tbody>
-
             {% for trade in entities %}
                 <tr>
                     <td>{{ trade.CashoutInfo.op_date }}</td>
@@ -32,10 +31,8 @@
                     <td>{{ trade.income }} руб</td>
                     <td>{{ trade.income_percent }} %</td>
                 </tr>
-
             {% endfor %}
             </tbody>
         </table>
     </div>
-
 {% endblock %}

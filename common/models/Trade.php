@@ -106,7 +106,30 @@ class Trade extends \Phalcon\Mvc\Model
                 $this->income_percent = round($this->income / $this->purchase * 100, 2);
             }
 
+
+           /* $sql = "UPDATE CashoutInfo SET op_send  = (SELECT sum(sale) as op_send FROM Trade where id_cashout = $this->id_cashout) - rest
+            where id = $this->id_cashout";
+
+            $this->_modelsManager
+                ->createQuery($sql)
+                ->execute();
+
+            $sql = "UPDATE CashoutInfo SET op_sum = (SELECT sum(sale_free) as op_sum FROM Trade where id_cashout = $this->id_cashout)
+            where id = $this->id_cashout";
+
+            $this->_modelsManager
+                ->createQuery($sql)
+                ->execute();*/
         }
+
+
+        $sql = "UPDATE CashoutInfo SET cost = (SELECT sum(purchase) as cost FROM Trade where id_cashout = $this->id_cashout)
+            where id = $this->id_cashout";
+
+        $this->_modelsManager
+            ->createQuery($sql)
+            ->execute();
+
     }
 
     public function beforeCreate()

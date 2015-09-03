@@ -1,5 +1,5 @@
 <?php
-
+//echo Phalcon\Version::get(); exit;
 error_reporting(E_ALL);
 
 define('APP_PATH', realpath('..') . '/');

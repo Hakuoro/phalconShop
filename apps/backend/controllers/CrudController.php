@@ -53,7 +53,7 @@ class CrudController extends \Phalcon\Mvc\Controller
                 if ($this->entity->save()){
 
                     $this->saveTags();
-                    $this->response->redirect($this->baseUrl . $this->entity->id);
+                    $this->response->redirect($this->baseUrl);
                 }else{
 
                     print_r($this->entity->getMessages());

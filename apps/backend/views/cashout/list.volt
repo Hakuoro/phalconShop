@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="col-md-10 col-md-offset-2 main">
-        <a href="/haku/trade/new">Добавить покупку</a>
+        <a href="/haku/trade/new">Добавить выплату</a>
         <table class="table table-hover">
             <thead>
             <tr>
