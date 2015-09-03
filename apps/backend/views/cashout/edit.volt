@@ -44,7 +44,7 @@
             <div class="form-group">
                 <label for="inputsale" class="col-md-2 control-label">Приход</label>
                 <div class="col-md-8">
-                    {{ form.render('cost', ['class':"form-control", 'id':'inputsale']) }}
+                    {{ form.render('pal_sum', ['class':"form-control", 'id':'inputsale']) }}
                 </div>
             </div>
 
