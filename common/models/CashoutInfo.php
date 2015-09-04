@@ -92,6 +92,28 @@ class CashoutInfo extends \Phalcon\Mvc\Model
     {
 
         $this->rate = round( $this->pal_sum / $this->op_sum, 2);
+
+
+        if ($this->op_sum && $this->pal_sum ) {
+
+            $trades = Trade::find(['id_cashout='.$this->id]);
+
+            foreach ($trades as $trade) {
+
+                $trade->sale_rub = round($trade->sale_free / ($this->op_sum) * $this->pal_sum,
+                    2);
+
+                $trade->income = round($trade->sale_rub - $trade->purchase, 2);
+
+                $trade->income_percent = round($trade->income / $trade->purchase * 100, 2);
+
+
+                $trade->save();
+            }
+
+
+        }
+
     }
 
     public function beforeCreate()
