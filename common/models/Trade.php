@@ -3,7 +3,7 @@
 class Trade extends \Phalcon\Mvc\Model
 {
 
-    const PAYPAL_CUT = 0.97;
+    const PAYPAL_CUT = 0.971;
     /**
      *
      * @var integer
@@ -123,12 +123,12 @@ class Trade extends \Phalcon\Mvc\Model
         }
 
 
-        $sql = "UPDATE CashoutInfo SET cost = (SELECT sum(purchase) as cost FROM Trade where id_cashout = $this->id_cashout)
+       /* $sql = "UPDATE CashoutInfo SET cost = (SELECT sum(purchase) as cost FROM Trade where id_cashout = $this->id_cashout)
             where id = $this->id_cashout";
 
         $this->_modelsManager
             ->createQuery($sql)
-            ->execute();
+            ->execute();*/
 
     }
 

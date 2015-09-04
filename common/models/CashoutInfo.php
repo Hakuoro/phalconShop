@@ -107,7 +107,6 @@ class CashoutInfo extends \Phalcon\Mvc\Model
 
                 $trade->income_percent = round($trade->income / $trade->purchase * 100, 2);
 
-
                 $trade->save();
             }
 
