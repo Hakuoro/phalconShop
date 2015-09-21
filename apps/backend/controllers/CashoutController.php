@@ -16,4 +16,30 @@ class CashoutController extends CrudController
 
 
     }
+
+
+
+    public function calculateAction($id){
+
+
+        $cashout = \CashoutInfo::findFirst($id);
+
+
+        $trades = \Trade::find(['id_cashout='.$id]);
+
+        $summ = 0;
+
+        foreach ($trades as $trade) {
+
+            $summ += $trade->purchase;
+
+        }
+
+        $cashout->cost = $summ;
+
+
+        $cashout->save();
+
+        $this->response->redirect($this->baseUrl);
+    }
 }

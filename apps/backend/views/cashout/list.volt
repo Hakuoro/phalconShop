@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="col-md-10 col-md-offset-2 main">
-        <a href="/haku/trade/new">Добавить выплату</a>
+        <a href="/haku/cashout/new">Добавить выплату</a>
         <table class="table table-hover">
             <thead>
             <tr>
@@ -35,7 +35,8 @@
                     <td>{{ cashout.op_date }}</td>
                     <td>{{ cashout.pal_date }}</td>
                     <td>{{ cashout.bank_date }}</td>
-                    <td scope="row"><a href="/haku/cashout/{{ cashout.id }}">Редактировать</a></td>
+                    <td scope="row"><a href="/haku/cashout/{{ cashout.id }}">Edit</a> |
+                        <a href="/haku/cashout/calculate/{{ cashout.id }}">Calc</a></td>
                 </tr>
 
             {% endfor %}
