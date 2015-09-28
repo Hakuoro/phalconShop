@@ -40,20 +40,23 @@ $adminRout = new \Phalcon\Mvc\Router\Group([
 
 $adminRout->setPrefix('/haku');
 
-$adminRout->add('/:controller/:action/:int', [
-    'controller' => 1,
-    'action' => 2,
-    'id' => 3
+$adminRout->add('/:controller/:action/:int/:params', [
+    'controller'    => 1,
+    'action'        => 2,
+    'id'            => 3,
+    'params'        => 4
 ]);
 
-$adminRout->add('/:controller/:action', [
-    'controller' => 1,
-    'action' => 2
+$adminRout->add('/:controller/:action/:params', [
+    'controller'    => 1,
+    'action'        => 2,
+    'params'        => 3
 ]);
 
-$adminRout->add('/:controller', [
+$adminRout->add('/:controller/:params', [
     'controller' => 1,
-    'action' => 'list'
+    'action' => 'list',
+    'params'     => 2
 ]);
 
 $adminRout->add('/:controller/new', [
