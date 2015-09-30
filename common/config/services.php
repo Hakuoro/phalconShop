@@ -39,21 +39,20 @@ $adminRout = new \Phalcon\Mvc\Router\Group([
 ]);
 
 $adminRout->setPrefix('/haku');
+//haku/cashout/calculate/7
 
-$adminRout->add('/:controller/:action/:int/:params', [
+$adminRout->add('/:controller/:action/:int', [
     'controller'    => 1,
     'action'        => 2,
     'id'            => 3,
-    'params'        => 4
 ]);
 
-$adminRout->add('/:controller/:action/:params', [
+$adminRout->add('/:controller/:action', [
     'controller'    => 1,
     'action'        => 2,
-    'params'        => 3
 ]);
 
-$adminRout->add('/:controller/:params', [
+$adminRout->add('/:controller', [
     'controller' => 1,
     'action' => 'list',
     'params'     => 2

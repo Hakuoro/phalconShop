@@ -36,4 +36,26 @@ class TradeController extends CrudController
 
     }
 
+    protected function beforeBind()
+    {
+
+        if(!$this->entity->id_cashout){
+
+            $cashout = \CashoutInfo::findFirst(["order" => "id DESC"]);
+
+            $this->entity->id_cashout = $cashout->id;
+
+        }
+
+
+    }
+
+    protected function beforeSave()
+    {
+
+        if ( (!$this->entity->hasSnapshotData()) || $this->entity->hasChanged('purchase') ){
+            $this->entity->purchase *= 1.0267;
+        }
+    }
+
 }

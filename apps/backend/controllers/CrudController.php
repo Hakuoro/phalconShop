@@ -42,13 +42,20 @@ class CrudController extends \Phalcon\Mvc\Controller
 
         $this->entity = $id?$model::findFirst($id):new $model();
 
+        /** @var \Phalcon\Forms\Form $form */
         $form = new $this->formClass($this->entity);
 
+
+        $this->beforeBind();
+
         $form->bind($_POST, $this->entity);
+
 
         if ($this->request->isPost()){
 
             if ($form->isValid($this->request->getPost())){
+
+                $this->beforeSave();
 
                 if ($this->entity->save()){
 
@@ -73,6 +80,10 @@ class CrudController extends \Phalcon\Mvc\Controller
         $this->view->form = $form;
 
     }
+
+    protected function beforeBind(){}
+
+    protected function beforeSave(){}
 
 
     public function deleteAction($id){

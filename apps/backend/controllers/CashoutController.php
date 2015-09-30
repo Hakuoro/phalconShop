@@ -12,9 +12,6 @@ class CashoutController extends CrudController
     public function listAction()
     {
         parent::listAction();
-
-
-
     }
 
 
