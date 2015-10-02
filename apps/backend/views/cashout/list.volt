@@ -26,7 +26,7 @@
                 <tr>
                     <td>{{ cashout.op_send }} $</td>
                     <td>{{ cashout.op_sum }} $</td>
-                    <td>{{ cashout.cost }} руб</td>
+                    <td scope="row"><a href="/haku/trade/list/cash/{{ cashout.id }}">{{ cashout.cost }} руб</a></td>
                     <td>{{ cashout.pal_sum }} руб</td>
                     <td>{{ cashout.rate }}</td>
                     <td>{{ cashout.pal_sum - cashout.cost }} </td>

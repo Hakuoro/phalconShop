@@ -52,6 +52,13 @@ $adminRout->add('/:controller/:action', [
     'action'        => 2,
 ]);
 
+
+$adminRout->add('/:controller/list/:params', [
+    'controller'    => 1,
+    'action'        => 'list',
+    'params'        => 2  // :params
+]);
+
 $adminRout->add('/:controller', [
     'controller' => 1,
     'action' => 'list',

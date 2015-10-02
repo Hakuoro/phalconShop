@@ -5,6 +5,7 @@ namespace Multiple\Backend;
 use Multiple\Backend\Plugins\AclListener;
 use Multiple\Backend\Plugins\BackendAssets;
 use Phalcon\DI\FactoryDefault;
+use Phalcon\Events\Manager;
 
 class Module
 {
@@ -43,6 +44,26 @@ class Module
 
 			$dispatcher->setEventsManager($eventManager);
 			$dispatcher->setDefaultNamespace('Multiple\Backend\Controllers\\');
+
+
+            $eventManager->attach('dispatch', function($event, $dispatcher) {
+                if ($event->getType() == 'beforeDispatchLoop') {
+                    $keyParams = array();
+                    $params = $dispatcher->getParams();
+                    foreach ($params as $number => $value) {
+                        if (is_int($number)) {
+                            $keyParams[$params[$number - 1]] = $value;
+                        }else{
+                            $keyParams[$number] = $value;
+                        }
+                    }
+                    $dispatcher->setParams($keyParams);
+                }
+            });
+
+            $dispatcher->setEventsManager($eventManager);
+
+
 			return $dispatcher;
 		});
 

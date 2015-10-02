@@ -30,6 +30,19 @@ class CashoutController extends CrudController
 
             $summ += $trade->purchase;
 
+            if ($trade->sale && $trade->sale_free && $cashout->op_sum && $cashout->pal_sum){
+
+                $trade->sale_rub = round($trade->sale_free / ($cashout->op_sum) * $cashout->pal_sum, 2);
+
+                $trade->income = round($trade->sale_rub - $trade->purchase, 2);
+
+                $trade->income_percent = round($trade->income / $trade->purchase * 100, 2);
+
+
+                $trade->save();
+
+            }
+
         }
 
         $cashout->cost = $summ;

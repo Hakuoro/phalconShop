@@ -12,12 +12,24 @@ class TradeController extends CrudController
     public function listAction()
     {
 
-
-        //print_r($this->dispatcher->getParams());
-        //exit;
+        $params = $this->dispatcher->getParams();
 
         $model = ($this->modelClass);
-        $entities =  $model::find(["order" => "id DESC"]);
+
+
+
+        if (isset($params['cash'])){
+
+            if ($params['cash'] == 'closed'){
+                $entities = $this->getClosedTrades();
+            }else {
+                $request = ["id_cashout=".(int)$params['cash']];
+                $request['order'] = "id DESC";
+                $entities =  $model::find($request);
+            }
+        }else{
+            $entities = $this->getActiveTrades();
+        }
 
         if ($this->request->isAjax()){
             $this->view->disable();
@@ -34,6 +46,28 @@ class TradeController extends CrudController
             $this->view->entities = $entities;
         }
 
+    }
+
+    protected function getActiveTrades(){
+
+        $sql = "Select Trade.* From Trade inner join CashoutInfo on Trade.id_cashout = CashoutInfo.id where pal_sum = 0.00 order by Trade.id DESC";
+
+        $entities = $this->modelsManager
+            ->createQuery($sql)
+            ->execute();
+
+        return $entities;
+    }
+
+    protected function getClosedTrades(){
+
+        $sql = "Select Trade.* From Trade inner join CashoutInfo on Trade.id_cashout = CashoutInfo.id where pal_sum > 0.00 order by Trade.id DESC";
+
+        $entities = $this->modelsManager
+            ->createQuery($sql)
+            ->execute();
+
+        return $entities;
     }
 
     protected function beforeBind()
