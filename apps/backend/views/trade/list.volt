@@ -4,7 +4,7 @@
 {% block content %}
     <div class="col-md-10 col-md-offset-2 main">
         <div><a href="/haku/trade/new">Добавить продажу</a> |
-            <a href="/haku/trade">Активные выплаты</a> |
+            <a href="/haku/trade/list/cash/active">Активные выплаты</a> |
             <a href="/haku/trade/list/cash/closed">Закрытые выплаты</a> |
             <a href="/haku/trade/list/cash/all">Все выплаты</a>
         </div>
