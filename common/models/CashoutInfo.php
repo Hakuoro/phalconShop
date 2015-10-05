@@ -91,12 +91,11 @@ class CashoutInfo extends \Phalcon\Mvc\Model
     protected function calculateFunds()
     {
 
-        $this->rate = round( $this->pal_sum / $this->op_sum, 2);
-
-
         if ($this->op_sum && $this->pal_sum ) {
 
-            $trades = Trade::find(['id_cashout='.$this->id]);
+            $this->rate = round( $this->pal_sum / $this->op_sum, 2);
+
+            /*$trades = Trade::find(['id_cashout='.$this->id]);
 
             foreach ($trades as $trade) {
 
@@ -108,8 +107,7 @@ class CashoutInfo extends \Phalcon\Mvc\Model
                 $trade->income_percent = round($trade->income / $trade->purchase * 100, 2);
 
                 $trade->save();
-            }
-
+            }*/
 
         }
 

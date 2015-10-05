@@ -87,12 +87,17 @@ class Trade extends \Phalcon\Mvc\Model
         $this->keepSnapshots(true);
     }
 
+    public function calculateFreeSale()
+    {
+        $this->sale_free = round($this->sale * self::PAYPAL_CUT , 2);
+    }
+
     protected function calculateFunds()
     {
 
-        if ($this->sale && !$this->sale_free){
+        if ($this->sale && $this->sale_free == 0){
 
-            $this->sale_free = round($this->sale * self::PAYPAL_CUT , 2);
+            $this->calculateFreeSale();
 
             /*if ($this->getCashoutInfo()->op_sum && $this->getCashoutInfo()->pal_sum ) {
                 $this->sale_rub = round($this->sale_free / ($this->getCashoutInfo()->op_sum) * $this->getCashoutInfo()->pal_sum,
