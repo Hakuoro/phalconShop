@@ -47,4 +47,11 @@ class Money extends \Phalcon\Mvc\Model
         );
     }
 
+    public function beforeCreate()
+    {
+        $m = Money::findFirst(["order" => "id DESC"]);
+
+        $this->money = $m->money + $this->opsum;
+    }
+
 }

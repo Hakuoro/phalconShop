@@ -32,8 +32,9 @@ class MoneyForm extends \Phalcon\Forms\Form
         $this->add($name);
 
         $name = new Text('money', array(
-            'placeholder' => 'остаток'
+            'placeholder' => 'money'
         ));
+
         $this->add($name);
     }
 }
