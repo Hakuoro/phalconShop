@@ -13,13 +13,13 @@ class User extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $name;
+    public $id_steam;
 
     /**
      *
      * @var string
      */
-    public $soclink;
+    public $trade_link;
 
     /**
      * Independent Column Mapping.
@@ -28,8 +28,8 @@ class User extends \Phalcon\Mvc\Model
     {
         return array(
             'id' => 'id', 
-            'name' => 'name', 
-            'soclink' => 'soclink'
+            'id_steam' => 'id_steam',
+            'trade_link' => 'trade_link'
         );
     }
 

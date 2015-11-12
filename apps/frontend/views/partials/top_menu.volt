@@ -13,7 +13,12 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">Сводка</a></li>
                 <li><a href="#">Настройки</a></li>
-                <li><a href="#">Профиль</a></li>
+
+                {% if (user) %}
+                    <li><a href="#">Профиль</a></li>
+                {% else %}
+                    <li><a href="#">Профиль!!!</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
