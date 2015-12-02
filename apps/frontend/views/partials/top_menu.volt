@@ -17,7 +17,7 @@
                 {% if (user) %}
                     <li><a href="#">Профиль</a></li>
                 {% else %}
-                    <li><a href="#">Профиль!!!</a></li>
+                    <li><a href="{{ loginLinkHref }}">Login </a></li>
                 {% endif %}
             </ul>
         </div>

@@ -23,6 +23,7 @@ $loader->registerDirs($registerDirs)->register();
 
 $loader->registerNamespaces(array(
     'Common\Models' => APP_PATH.'common/models/',
+    'Steam' => APP_PATH.'common/libs/Steam',
 ));
 
 $di = new FactoryDefault();

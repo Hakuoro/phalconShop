@@ -4,6 +4,7 @@ namespace Multiple\Frontend\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
+use Steam\SteamSignIn;
 
 class BaseController extends Controller
 {
@@ -26,6 +27,9 @@ class BaseController extends Controller
         if ($this->session->has(static::SESSION_ID_KEY)){
 
             $this->user = \User::findFirst((int)$this->session->get(static::SESSION_ID_KEY));
+
+        }else{
+            $this->view->loginLinkHref = SteamSignIn::genUrl('http://newlke.ru/');
 
         }
 
